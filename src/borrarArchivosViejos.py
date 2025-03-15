@@ -3,18 +3,16 @@ from datetime import datetime
 
 
 def borrar_archivos_viejos(file_dir):
-    today = datetime.today()
+    if not os.path.exists(file_dir):
+        print(f"El directorio {file_dir} no existe.")
+        return
 
-    for root, dirs, files in os.walk(file_dir):
-        for file in files:
-            file_path = os.path.join(root, file)
-
+    for entry in os.scandir(file_dir):
+        if entry.is_file():
             try:
-                file_created_time = os.path.getctime(file_path)
-                file_date = datetime.fromtimestamp(file_created_time)
-
-                if file_date.month < today.month:
-                    print(f"Eliminando: {file_path}")
-                    os.remove(file_path)
+                file_date = datetime.fromtimestamp(entry.stat().st_ctime)
+                if file_date.month < datetime.today().month:
+                    print(f"Eliminando: {entry.path}")
+                    os.remove(entry.path)
             except Exception as e:
-                print(f"Error con {file_path}: {e}")
+                print(f"Error con {entry.path}: {e}")

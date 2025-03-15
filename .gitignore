@@ -6,6 +6,11 @@ __pycache__/
 # C extensions
 *.so
 
+# PyInstaller Build
+build
+dist
+main.spec
+
 # Distribution / packaging
 .Python
 build/

@@ -7,25 +7,21 @@ from src.descargarAudio import descargar_audio
 
 
 def obtener_y_descargar_audio(programa):
-    response = requests.get(programa["escuchar_link"], timeout=30)
+    try:
+        response = requests.get(programa["escuchar_link"], timeout=30)
+        response.raise_for_status()
+    except requests.RequestException as e:
+        print(f"Error al acceder a la página de escuchar ({programa['titulo']}): {e}")
+        return
 
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
-        scripts = soup.find_all('script')
+    soup = BeautifulSoup(response.text, "html.parser")
 
-        audio_url = None
-        for script in scripts:
-            if script.string and 'sources: [' in script.string:
-                match = re.search(r"src:\s*'(https?://[^']+\.mp3\?site=[^']+)'", script.string)
-                if match:
-                    audio_url = match.group(1)
-                    break
+    for script in soup.find_all("script"):
+        if script.string:
+            match = re.search(r"src:\s*'(https?://[^']+\.mp3\?site=[^']+)'", script.string)
+            if match:
+                audio_url = match.group(1)
+                descargar_audio(audio_url, programa["nombre_programa"], programa["titulo"])
+                return
 
-        if audio_url:
-            nombre_programa = programa["nombre_programa"]
-            titulo_programa = programa["titulo"]
-            descargar_audio(audio_url, nombre_programa, titulo_programa)
-        else:
-            print(f"No se encontró enlace de audio para {programa['titulo']}")
-    else:
-        print(f"Error al acceder a la página de escuchar: {response.status_code}")
+    print(f"No se encontró enlace de audio para {programa['titulo']}")

@@ -9,7 +9,8 @@ from src.obtenerEnlacesProgramas import obtener_enlaces_programas
 
 def main():
     load_dotenv()
-    programas_urls = os.getenv("PROGRAMAS_URL").split(',')
+    programas_urls = os.getenv("PROGRAMAS_URL").split(';')
+
     borrar_archivos_viejos(os.getenv("DIRECTORIO"))
 
     for url in programas_urls:
