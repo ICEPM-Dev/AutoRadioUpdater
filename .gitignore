@@ -10,6 +10,7 @@ __pycache__/
 build
 dist
 main.spec
+programas
 
 # Distribution / packaging
 .Python
