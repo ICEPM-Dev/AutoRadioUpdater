@@ -1,0 +1,148 @@
+{
+  "radio_programs": [
+    {
+      "name": "Semillas al Aire",
+      "url": "https://www.semillasalaire.com.ar/",
+      "enabled": true,
+      "description": "Programa de radio cristiano"
+    },
+    {
+      "name": "Sabiduría Internacional",
+      "url": "https://sabiduriainternacional.org/",
+      "enabled": true,
+      "description": "Enseñanzas bíblicas internacionales"
+    },
+    {
+      "name": "Visión para Vivir",
+      "url": "https://visionparavivir.org/escuche/programa-actual/",
+      "enabled": true,
+      "description": "Programa actual de Visión para Vivir"
+    },
+    {
+      "name": "Abre la Biblia",
+      "url": "https://www.twr360.org/ministry/458/abre-la-biblia-con-el-pastor-colin-smith/lang,2",
+      "enabled": true,
+      "description": "Programa bíblico con el Pastor Colin Smith"
+    },
+    {
+      "name": "Fundamentos del Discipulado",
+      "url": "https://www.twr360.org/ministry/454/fundamentos-del-discipulado--transmisiones/lang,2",
+      "enabled": true,
+      "description": "Enseñanzas sobre discipulado cristiano"
+    },
+    {
+      "name": "Renovando tu Mente - Ligonier",
+      "url": "https://es.ligonier.org/renovandotumente/archivo/",
+      "enabled": true,
+      "description": "Archivo de programas de Renovando tu Mente"
+    },
+    {
+      "name": "El Camino de la Vida",
+      "url": "https://www.elcaminodelavida.org/reflexion-para-hoy/",
+      "enabled": true,
+      "description": "Reflexiones diarias cristianas"
+    },
+    {
+      "name": "La Biblia Dice - Una Pausa en tu Vida",
+      "url": "https://www.labibliadice.org/una-pausa-en-tu-vida/",
+      "enabled": true,
+      "description": "Programa de reflexiones bíblicas (TIMEOUT)"
+    },
+    {
+      "name": "A Través de la Biblia",
+      "url": "https://www.twr360.org/ministry/4/a-trav-s-de-la-biblia/lang,2",
+      "enabled": true,
+      "description": "Estudio sistemático de la Biblia"
+    },
+    {
+      "name": "Aviva Nuestros Corazones",
+      "url": "https://www.twr360.org/ministry/250/aviva-nuestros-corazones/lang,2",
+      "enabled": true,
+      "description": "Programa para mujeres cristianas"
+    },
+    {
+      "name": "Correr para Ganar",
+      "url": "https://www.twr360.org/ministry/36/correr-para-ganar/lang,2",
+      "enabled": true,
+      "description": "Enseñanzas sobre la vida cristiana"
+    },
+    {
+      "name": "El Amor que Vale",
+      "url": "https://www.twr360.org/ministry/34/el-amor-que-vale/lang,2",
+      "enabled": true,
+      "description": "Programa sobre el amor de Dios"
+    },
+    {
+      "name": "Gracia a Vosotros",
+      "url": "https://gracia.org/broadcasts/radio",
+      "enabled": true,
+      "description": "Enseñanzas bíblicas expositivas"
+    },
+    {
+      "name": "Jungla Semántica",
+      "url": "https://www.twr360.org/ministry/18/jungla-sem-ntica/lang,2",
+      "enabled": true,
+      "description": "Programa educativo cristiano"
+    },
+    {
+      "name": "La Verdad en el Tubo de Ensayo",
+      "url": "https://www.twr360.org/ministry/16/la-verdad-en-el-tubo-de-ensayo/lang,2",
+      "enabled": true,
+      "description": "Ciencia y fe cristiana"
+    },
+    {
+      "name": "Momento Decisivo",
+      "url": "https://www.twr360.org/ministry/23/momento-decisivo/lang,2",
+      "enabled": true,
+      "description": "Decisiones importantes desde la perspectiva bíblica"
+    },
+    {
+      "name": "Pedrito el Pulpo",
+      "url": "https://www.twr360.org/ministry/17/pedrito-el-pulpo/lang,2",
+      "enabled": true,
+      "description": "Programa infantil cristiano"
+    },
+    {
+      "name": "Tierra Firme",
+      "url": "https://www.twr360.org/ministry/14/tierra-firme/lang,2",
+      "enabled": true,
+      "description": "Fundamentos sólidos de la fe"
+    },
+    {
+      "name": "Luis Palau Responde",
+      "url": "https://www.twr360.org/ministry/207/luis-palau-responde/lang,2",
+      "enabled": true,
+      "description": "Respuestas a preguntas sobre la fe"
+    },
+    {
+      "name": "Coalición por el Evangelio - Mujeres",
+      "url": "https://www.coalicionporelevangelio.org/podcasts/mujeres/",
+      "enabled": false,
+      "description": "Podcast para mujeres cristianas"
+    },
+    {
+      "name": "Crianza Reverente",
+      "url": "https://crianzareverente.com/cr-podcast/",
+      "enabled": false,
+      "description": "Recursos para la crianza cristiana (ERROR 403)"
+    },
+    {
+      "name": "Cambios Profundos - Devocionales",
+      "url": "https://cambiosprofundos.com/devocionales-en-audio/",
+      "enabled": false,
+      "description": "Devocionales cristianos en audio"
+    },
+    {
+      "name": "Acast Podcast Episode",
+      "url": "https://shows.acast.com/5ecf55fba5c8470ad11227e3/episodes/67425794041fb70e9c9d6343",
+      "enabled": true,
+      "description": "Episodio de podcast en Acast"
+    }
+  ],
+  "settings": {
+    "download_directory": "programas",
+    "max_episodes_per_program": 5,
+    "cleanup_old_files": true,
+    "cleanup_days": 30
+  }
+}
