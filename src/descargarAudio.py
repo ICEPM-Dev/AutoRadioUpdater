@@ -1,8 +1,6 @@
 import time
 from pathlib import Path
-
 import requests
-
 from src.limpiarNombreArchivo import limpiar_nombre_archivo
 
 
@@ -23,30 +21,33 @@ def descargar_audio(audio_url, nombre_programa, titulo, directorio_base=None):
         print(f"El archivo ya existe: {ruta_archivo}. Se omite la descarga.")
         return
 
+    # Handle YouTube URLs
+    if 'youtube.com' in audio_url or 'youtu.be' in audio_url:
+        return _descargar_youtube(audio_url, ruta_archivo, titulo)
+
+    # Handle special case for local audio generation
+    if audio_url == "generate_local_audio":
+        print(f"Generando audio local para: {titulo}")
+        _generate_local_audio_file(ruta_archivo, titulo)
+        return
+
+    # Normal download for direct MP3 URLs
     for intento in range(3):
         try:
-            # Handle special case for local audio generation
-            if audio_url == "generate_local_audio":
-                print(f"Generando audio local para: {titulo}")
-                _generate_local_audio_file(ruta_archivo, titulo)
-                return
-            
             print(f"Descargando audio desde: {audio_url}")
             
-            # Check if this is a potentially large file (like Sabiduría Internacional)
+            # Check if this is a potentially large file
             is_large_file = 'podbean.com' in audio_url or 'sabiduria' in nombre_programa.lower()
             
-            # Add headers to mimic a browser request and optimize connection
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                 'Accept': 'audio/webm,audio/ogg,audio/wav,audio/*;q=0.9,*/*;q=0.5',
                 'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8',
                 'Connection': 'keep-alive',
-                'Accept-Encoding': 'identity',  # Disable compression for large files
+                'Accept-Encoding': 'identity',
             }
             
-            # Use longer timeout for large files
-            timeout = 300 if is_large_file else 60  # 5 minutes for large files
+            timeout = 300 if is_large_file else 60
             
             response = requests.get(audio_url, stream=True, timeout=timeout, headers=headers, allow_redirects=True)
 
@@ -55,23 +56,19 @@ def descargar_audio(audio_url, nombre_programa, titulo, directorio_base=None):
                 downloaded = 0
                 
                 with ruta_archivo.open("wb") as f:
-                    # Use larger chunks for faster downloads
-                    chunk_size = 131072 if is_large_file else 65536  # 128KB for large files
+                    chunk_size = 131072 if is_large_file else 65536
                     
                     for chunk in response.iter_content(chunk_size=chunk_size):
                         if chunk:
                             f.write(chunk)
                             downloaded += len(chunk)
                             
-                            # Show progress for large files
                             if total_size > 0 and is_large_file:
                                 progress = (downloaded / total_size) * 100
-                                # Print every ~5MB for large files to avoid spam
                                 if downloaded % (5 * 1024 * 1024) < chunk_size:
                                     print(f"  Progreso: {progress:.1f}% ({downloaded // 1024 // 1024} MB / {total_size // 1024 // 1024} MB)")
                             elif total_size > 0 and not is_large_file:
                                 progress = (downloaded / total_size) * 100
-                                # Print every ~2MB for normal files
                                 if downloaded % (2 * 1024 * 1024) < chunk_size:
                                     print(f"  Progreso: {progress:.1f}% ({downloaded // 1024 // 1024} MB / {total_size // 1024 // 1024} MB)")
 
@@ -93,31 +90,80 @@ def descargar_audio(audio_url, nombre_programa, titulo, directorio_base=None):
     print("Se alcanzó el número máximo de intentos. No se pudo descargar el audio.")
 
 
+def _descargar_youtube(video_url, ruta_archivo, titulo):
+    """Descarga audio desde YouTube usando yt-dlp"""
+    try:
+        import yt_dlp
+        
+        print(f"📺 Descargando audio de YouTube: {video_url}")
+        
+        # Configuración para yt-dlp
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'outtmpl': str(ruta_archivo.with_suffix('')),  # Sin extensión, yt-dlp la agrega
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }],
+            'quiet': False,
+            'no_warnings': False,
+        }
+        
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([video_url])
+        
+        print(f"✅ Audio de YouTube guardado en: {ruta_archivo}")
+        return
+        
+    except ImportError:
+        print("⚠ ERROR: yt-dlp no está instalado")
+        print("   Instala con: pip install yt-dlp")
+        print("   También necesitas ffmpeg instalado en tu sistema")
+        print(f"   Para descargar manualmente: yt-dlp -x --audio-format mp3 {video_url}")
+        
+    except Exception as e:
+        print(f"✗ Error descargando de YouTube: {e}")
+        print(f"   Para descargar manualmente: yt-dlp -x --audio-format mp3 {video_url}")
+
+
+def _descargar_spotify(spotify_url, ruta_archivo, titulo):
+    """
+    Spotify usa DRM y no se puede descargar directamente.
+    Esta función solo informa al usuario.
+    """
+    print(f"🎵 Spotify detectado: {spotify_url}")
+    print(f"⚠ ERROR: Spotify usa DRM (protección anti-copia)")
+    print(f"   yt-dlp NO puede descargar contenido protegido con DRM")
+    print(f"\n💡 Alternativas:")
+    print(f"   1. Usa Spotify Premium y escucha offline en la app")
+    print(f"   2. Busca si el podcast tiene RSS feed público")
+    print(f"   3. Verifica si está disponible en YouTube o SoundCloud")
+    print(f"\n   Este episodio será OMITIDO")
+    
+    # No intentar descargar, simplemente retornar
+    return
+
+
 def _generate_local_audio_file(ruta_archivo, titulo):
     """Generate a local audio file with devotional content"""
     try:
-        # Create a simple silent audio file with metadata
-        # For now, create a small MP3 file with proper headers
-        
         # Basic MP3 header for a silent file
         mp3_header = bytes([
-            0xFF, 0xFB, 0x90, 0x00,  # MP3 frame header
-            0x00, 0x00, 0x00, 0x00,  # Additional frame data
+            0xFF, 0xFB, 0x90, 0x00,
+            0x00, 0x00, 0x00, 0x00,
         ])
         
         # Create a 1-second silent MP3
-        silent_audio = mp3_header + bytes([0] * 1000)  # Small silent audio
+        silent_audio = mp3_header + bytes([0] * 1000)
         
-        # Write the file
         with open(ruta_archivo, 'wb') as f:
             f.write(silent_audio)
         
         print(f"✅ Audio local generado en: {ruta_archivo}")
         print(f"📝 Nota: Este es un archivo de audio generado localmente para {titulo}")
-        print(f"   El audio real de Cambios Profundos no está disponible automáticamente.")
         
     except Exception as e:
         print(f"Error al generar audio local: {e}")
-        # Create empty file as fallback
         ruta_archivo.touch()
         print(f"📝 Archivo vacío creado en: {ruta_archivo}")

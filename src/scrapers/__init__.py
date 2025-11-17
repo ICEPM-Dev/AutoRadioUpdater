@@ -5,12 +5,15 @@ from .sabiduria_scraper import SabiduriaInternacionalScraper
 from .vision_scraper import VisionParaVivirScraper
 from .ligonier_scraper import LigonierScraper
 from .camino_vida_scraper import CaminoVidaScraper
-from .labibliadice_scraper import LaBibliaDiceScraper
 from .coalicion_scraper import CoalicionScraper
 from .crianza_scraper import CrianzaReverenteScraper
 from .cambios_scraper import CambiosProfundosScraper
-from .acast_scraper import AcastScraper
+from .temas_biblicos_scraper import TemasBiblicosScraper
 from .gracia_scraper import GraciaScraper
+from .youtube_scraper import YouTubeScraper
+from .carlos_ruiz_scraper import CarlosRuizScraper
+from .rss_scraper import RSSFeedScraper
+from .bibleproject_scraper import BibleProjectScraper
 
 __all__ = [
     'BaseScraper',
@@ -20,10 +23,13 @@ __all__ = [
     'VisionParaVivirScraper',
     'LigonierScraper',
     'CaminoVidaScraper',
-    'LaBibliaDiceScraper',
     'CoalicionScraper',
     'CrianzaReverenteScraper',
     'CambiosProfundosScraper',
-    'AcastScraper',
-    'GraciaScraper'
+    'TemasBiblicosScraper',
+    'GraciaScraper',
+    'YouTubeScraper',
+    'CarlosRuizScraper',
+    'RSSFeedScraper',
+    'BibleProjectScraper'
 ]

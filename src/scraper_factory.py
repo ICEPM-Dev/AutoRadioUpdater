@@ -8,12 +8,14 @@ from .scrapers import (
     VisionParaVivirScraper,
     LigonierScraper,
     CaminoVidaScraper,
-    LaBibliaDiceScraper,
     CoalicionScraper,
     CrianzaReverenteScraper,
     CambiosProfundosScraper,
-    AcastScraper,
-    GraciaScraper
+    TemasBiblicosScraper,
+    GraciaScraper,
+    CarlosRuizScraper,
+    RSSFeedScraper,
+    BibleProjectScraper
 )
 
 
@@ -35,19 +37,22 @@ class ScraperFactory:
         'www.ligonier.org': LigonierScraper,
         'elcaminodelavida.org': CaminoVidaScraper,
         'www.elcaminodelavida.org': CaminoVidaScraper,
-        'labibliadice.org': LaBibliaDiceScraper,
-        'www.labibliadice.org': LaBibliaDiceScraper,
         'coalicionporelevangelio.org': CoalicionScraper,
         'www.coalicionporelevangelio.org': CoalicionScraper,
         'crianzareverente.com': CrianzaReverenteScraper,
         'www.crianzareverente.com': CrianzaReverenteScraper,
         'cambiosprofundos.com': CambiosProfundosScraper,
         'www.cambiosprofundos.com': CambiosProfundosScraper,
-        'shows.acast.com': AcastScraper,
-        'acast.com': AcastScraper,
-        'www.acast.com': AcastScraper,
+        'shows.acast.com': TemasBiblicosScraper,
+        'feeds.acast.com': TemasBiblicosScraper,
         'gracia.org': GraciaScraper,
         'www.gracia.org': GraciaScraper,
+        'www.youtube.com': CarlosRuizScraper,
+        'youtube.com': CarlosRuizScraper,
+        'anchor.fm': RSSFeedScraper,
+        'feeds.': RSSFeedScraper,
+        'rss': RSSFeedScraper,
+        'proyectobiblia.com': BibleProjectScraper,
     }
     
     # Program names mapping
@@ -65,19 +70,19 @@ class ScraperFactory:
         'www.ligonier.org': 'Renovando tu Mente',
         'elcaminodelavida.org': 'El Camino de la Vida',
         'www.elcaminodelavida.org': 'El Camino de la Vida',
-        'labibliadice.org': 'La Biblia Dice',
-        'www.labibliadice.org': 'La Biblia Dice',
         'coalicionporelevangelio.org': 'Coalición por el Evangelio',
         'www.coalicionporelevangelio.org': 'Coalición por el Evangelio',
         'crianzareverente.com': 'Crianza Reverente',
         'www.crianzareverente.com': 'Crianza Reverente',
         'cambiosprofundos.com': 'Cambios Profundos',
         'www.cambiosprofundos.com': 'Cambios Profundos',
-        'shows.acast.com': 'Acast Podcast',
-        'acast.com': 'Acast Podcast',
-        'www.acast.com': 'Acast Podcast',
+        'shows.acast.com': 'Temas Bíblicos',
+        'feeds.acast.com': 'Temas Bíblicos',
         'gracia.org': 'Gracia a Vosotros',
         'www.gracia.org': 'Gracia a Vosotros',
+        'www.youtube.com': "Carlos Ruiz Devocionales",
+        'youtube.com': "Carlos Ruiz Devocionales",
+        'proyectobiblia.com': "Proyecto Biblia"
     }
     
     @classmethod

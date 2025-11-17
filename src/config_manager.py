@@ -41,14 +41,22 @@ class ConfigManager:
             }
         }
     
-    def save_config(self):
-        """Save current configuration to file"""
+    def load_config(self) -> Dict[str, Any]:
+        """Public method to reload and return current configuration"""
+        self.config = self._load_config()
+        return self.config
+    
+    def save_config(self, config=None):
+        """Save configuration to file"""
         try:
             # Create config directory if it doesn't exist
             self.config_file.parent.mkdir(parents=True, exist_ok=True)
             
+            # Use provided config or current self.config
+            config_to_save = config if config is not None else self.config
+            
             with open(self.config_file, 'w', encoding='utf-8') as f:
-                json.dump(self.config, f, indent=2, ensure_ascii=False)
+                json.dump(config_to_save, f, indent=2, ensure_ascii=False)
             print(f"Configuration saved to {self.config_file}")
         except Exception as e:
             print(f"Error saving config: {e}")
@@ -64,14 +72,30 @@ class ConfigManager:
         """Get all radio programs"""
         return self.config.get("radio_programs", [])
     
-    def add_program(self, name: str, url: str, description: str = "", enabled: bool = True):
-        """Add a new radio program"""
-        new_program = {
-            "name": name,
-            "url": url,
-            "enabled": enabled,
-            "description": description
-        }
+    def add_program(self, program_data):
+        """Add a new radio program
+        
+        Args:
+            program_data: Can be either a dict with program configuration or 
+                         separate arguments (name, url, description, enabled)
+        """
+        # Handle both dict and separate arguments
+        if isinstance(program_data, dict):
+            new_program = program_data
+        else:
+            # Legacy support: first argument is name
+            name = program_data
+            # Try to get other arguments if this was called with old signature
+            import inspect
+            frame = inspect.currentframe()
+            args = inspect.getargvalues(frame)
+            
+            new_program = {
+                "name": name,
+                "url": args.locals.get('url', ''),
+                "enabled": args.locals.get('enabled', True),
+                "description": args.locals.get('description', '')
+            }
         
         if "radio_programs" not in self.config:
             self.config["radio_programs"] = []
@@ -121,7 +145,7 @@ class ConfigManager:
         return self.get_setting("download_directory", "programas")
     
     def get_max_episodes_per_program(self) -> int:
-        """Get maximum episodes per program"""
+        """Get maximum episodes per program (default global value)"""
         return self.get_setting("max_episodes_per_program", 5)
     
     def should_cleanup_old_files(self) -> bool:
@@ -129,5 +153,5 @@ class ConfigManager:
         return self.get_setting("cleanup_old_files", True)
     
     def get_cleanup_days(self) -> int:
-        """Get number of days after which files should be cleaned up"""
+        """Get number of days after which files should be cleaned up (default global value)"""
         return self.get_setting("cleanup_days", 30)

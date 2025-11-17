@@ -1,142 +1,252 @@
 {
   "radio_programs": [
     {
+    "name": "El Contacto Cristiano",
+    "url": "https://www.twr360.org/ministry/199/el-contacto-cristiano/lang,2",
+    "enabled": true,
+    "description": "Estudio Biblico",
+    "max_episodes": 1,
+    "cleanup_days": 1
+    },
+    {
+    "name": "Bible Project Español",
+    "url": "https://proyectobiblia.com/podcasts/bibleproject-espanol/",
+    "enabled": true,
+    "description": "Podcast bíblico educativo",
+    "max_episodes": 5,
+    "cleanup_days": 30
+    },
+    {
+      "name": "BITE Project",
+      "url": "https://anchor.fm/s/3a356954/podcast/rss",
+      "enabled": true,
+      "description": "Podcast via RSS de Anchor",
+      "max_episodes": 2,
+      "cleanup_days": 2
+    },
+    {
+      "name": "Coalición por el Evangelio - Mujeres",
+      "url": "https://www.coalicionporelevangelio.org/podcasts/mujeres/",
+      "enabled": true,
+      "description": "Podcast para mujeres cristianas",
+      "max_episodes": 5,
+      "cleanup_days": 30
+    },
+    {
+      "name": "Coalición - podcast",
+      "url": "https://www.coalicionporelevangelio.org/podcasts/tgc-articulos-podcast/",
+      "enabled": true,
+      "description": "Podcast informativos",
+      "max_episodes": 1,
+      "cleanup_days": 2
+    },
+    {
+      "name": "Coalición - Sermones",
+      "url": "https://www.coalicionporelevangelio.org/podcasts/un-sermon-para-tu-semana-podcast/",
+      "description": "Sermones semanales de TGC",
+      "enabled": true,
+      "max_episodes": 1,
+      "cleanup_days": 1
+    },
+    {
+      "name": "Carlos Ruiz Devocionales",
+      "url": "https://www.youtube.com/@CarlosRuiz-eq8pf/videos",
+      "enabled": true,
+      "description": "Devocionales cortos de Carlos Ruiz (≤3 minutos)",
+      "max_episodes": 1,
+      "cleanup_days": 2
+    },
+    {
       "name": "Semillas al Aire",
       "url": "https://www.semillasalaire.com.ar/",
       "enabled": true,
-      "description": "Programa de radio cristiano"
+      "description": "Programa de radio cristiano",
+      "max_episodes": 1,
+      "cleanup_days": 2
     },
     {
       "name": "Sabiduría Internacional",
       "url": "https://sabiduriainternacional.org/",
       "enabled": true,
-      "description": "Enseñanzas bíblicas internacionales"
+      "description": "Enseñanzas bíblicas internacionales",
+      "max_episodes": 1,
+      "cleanup_days": 2
     },
     {
       "name": "Visión para Vivir",
       "url": "https://visionparavivir.org/escuche/programa-actual/",
       "enabled": true,
-      "description": "Programa actual de Visión para Vivir"
+      "description": "Programa actual de Visión para Vivir",
+      "max_episodes": 1,
+      "cleanup_days": 2
     },
     {
       "name": "Abre la Biblia",
       "url": "https://www.twr360.org/ministry/458/abre-la-biblia-con-el-pastor-colin-smith/lang,2",
       "enabled": true,
-      "description": "Programa bíblico con el Pastor Colin Smith"
+      "description": "Programa bíblico con el Pastor Colin Smith",
+      "max_episodes": 1,
+      "cleanup_days": 2
     },
     {
       "name": "Fundamentos del Discipulado",
       "url": "https://www.twr360.org/ministry/454/fundamentos-del-discipulado--transmisiones/lang,2",
       "enabled": true,
-      "description": "Enseñanzas sobre discipulado cristiano"
+      "description": "Enseñanzas sobre discipulado cristiano",
+      "max_episodes": 5,
+      "cleanup_days": 30
+    },
+    {
+      "name": "Esperanza Segura",
+      "url": "https://www.twr360.org/ministry/9/esperanza-segura/lang,2",
+      "enabled": true,
+      "description": "Estudios biblicos",
+      "max_episodes": 1,
+      "cleanup_days": 1
+    },
+    {
+      "name": "Escuela Biblica Trans Mundial",
+      "url": "https://www.twr360.org/ministry/97/escuela-biblica-trans-mundial/lang,2",
+      "enabled": true,
+      "description": "Enseñanzas cristianas",
+      "max_episodes": 1,
+      "cleanup_days": 1
     },
     {
       "name": "Renovando tu Mente - Ligonier",
       "url": "https://es.ligonier.org/renovandotumente/archivo/",
       "enabled": true,
-      "description": "Archivo de programas de Renovando tu Mente"
+      "description": "Archivo de programas de Renovando tu Mente",
+      "max_episodes": 5,
+      "cleanup_days": 30
     },
     {
       "name": "El Camino de la Vida",
       "url": "https://www.elcaminodelavida.org/reflexion-para-hoy/",
       "enabled": true,
-      "description": "Reflexiones diarias cristianas"
+      "description": "Reflexiones diarias cristianas",
+      "max_episodes": 1,
+      "cleanup_days": 2
     },
     {
-      "name": "La Biblia Dice - Una Pausa en tu Vida",
-      "url": "https://www.labibliadice.org/una-pausa-en-tu-vida/",
+      "name": "Alimento para el Alma",
+      "url": "https://www.twr360.org/ministry/13/alimento-para-el-alma/lang,2",
       "enabled": true,
-      "description": "Programa de reflexiones bíblicas (TIMEOUT)"
+      "description": "Programa de TWR360",
+      "max_episodes": 1,
+      "cleanup_days": 1
     },
     {
       "name": "A Través de la Biblia",
       "url": "https://www.twr360.org/ministry/4/a-trav-s-de-la-biblia/lang,2",
       "enabled": true,
-      "description": "Estudio sistemático de la Biblia"
+      "description": "Estudio sistemático de la Biblia",
+      "max_episodes": 1,
+      "cleanup_days": 2
     },
     {
       "name": "Aviva Nuestros Corazones",
       "url": "https://www.twr360.org/ministry/250/aviva-nuestros-corazones/lang,2",
       "enabled": true,
-      "description": "Programa para mujeres cristianas"
+      "description": "Programa para mujeres cristianas",
+      "max_episodes": 1,
+      "cleanup_days": 2
     },
     {
       "name": "Correr para Ganar",
       "url": "https://www.twr360.org/ministry/36/correr-para-ganar/lang,2",
       "enabled": true,
-      "description": "Enseñanzas sobre la vida cristiana"
+      "description": "Enseñanzas sobre la vida cristiana",
+      "max_episodes": 1,
+      "cleanup_days": 2
     },
     {
       "name": "El Amor que Vale",
       "url": "https://www.twr360.org/ministry/34/el-amor-que-vale/lang,2",
       "enabled": true,
-      "description": "Programa sobre el amor de Dios"
+      "description": "Programa sobre el amor de Dios",
+      "max_episodes": 1,
+      "cleanup_days": 2
     },
     {
       "name": "Gracia a Vosotros",
       "url": "https://gracia.org/broadcasts/radio",
       "enabled": true,
-      "description": "Enseñanzas bíblicas expositivas"
+      "description": "Enseñanzas bíblicas expositivas",
+      "max_episodes": 1,
+      "cleanup_days": 2
     },
     {
       "name": "Jungla Semántica",
       "url": "https://www.twr360.org/ministry/18/jungla-sem-ntica/lang,2",
       "enabled": true,
-      "description": "Programa educativo cristiano"
+      "description": "Programa educativo cristiano",
+      "max_episodes": 5,
+      "cleanup_days": 30
     },
     {
       "name": "La Verdad en el Tubo de Ensayo",
       "url": "https://www.twr360.org/ministry/16/la-verdad-en-el-tubo-de-ensayo/lang,2",
       "enabled": true,
-      "description": "Ciencia y fe cristiana"
+      "description": "Ciencia y fe cristiana",
+      "max_episodes": 5,
+      "cleanup_days": 30
     },
     {
       "name": "Momento Decisivo",
       "url": "https://www.twr360.org/ministry/23/momento-decisivo/lang,2",
       "enabled": true,
-      "description": "Decisiones importantes desde la perspectiva bíblica"
+      "description": "Decisiones importantes desde la perspectiva bíblica",
+      "max_episodes": 1,
+      "cleanup_days": 2
     },
     {
       "name": "Pedrito el Pulpo",
       "url": "https://www.twr360.org/ministry/17/pedrito-el-pulpo/lang,2",
       "enabled": true,
-      "description": "Programa infantil cristiano"
+      "description": "Programa infantil cristiano",
+      "max_episodes": 5,
+      "cleanup_days": 30
     },
     {
       "name": "Tierra Firme",
       "url": "https://www.twr360.org/ministry/14/tierra-firme/lang,2",
       "enabled": true,
-      "description": "Fundamentos sólidos de la fe"
+      "description": "Fundamentos sólidos de la fe",
+      "max_episodes": 5,
+      "cleanup_days": 30
     },
     {
       "name": "Luis Palau Responde",
       "url": "https://www.twr360.org/ministry/207/luis-palau-responde/lang,2",
       "enabled": true,
-      "description": "Respuestas a preguntas sobre la fe"
-    },
-    {
-      "name": "Coalición por el Evangelio - Mujeres",
-      "url": "https://www.coalicionporelevangelio.org/podcasts/mujeres/",
-      "enabled": false,
-      "description": "Podcast para mujeres cristianas"
+      "description": "Respuestas a preguntas sobre la fe",
+      "max_episodes": 5,
+      "cleanup_days": 30
     },
     {
       "name": "Crianza Reverente",
       "url": "https://crianzareverente.com/cr-podcast/",
-      "enabled": false,
-      "description": "Recursos para la crianza cristiana (ERROR 403)"
+      "enabled": true,
+      "description": "Recursos para la crianza cristiana",
+      "max_episodes": 5,
+      "cleanup_days": 30
     },
     {
       "name": "Cambios Profundos - Devocionales",
       "url": "https://cambiosprofundos.com/devocionales-en-audio/",
-      "enabled": false,
-      "description": "Devocionales cristianos en audio"
+      "enabled": true,
+      "description": "Devocionales cristianos en audio",
+      "max_episodes": 1,
+      "cleanup_days": 2
     },
     {
-      "name": "Acast Podcast Episode",
-      "url": "https://shows.acast.com/5ecf55fba5c8470ad11227e3/episodes/67425794041fb70e9c9d6343",
+      "name": "Temas Biblicos",
+      "url": "https://shows.acast.com/temas-biblicos/episodes",
       "enabled": true,
-      "description": "Episodio de podcast en Acast"
+      "description": "Episodio de podcast Temas Biblicos",
+      "max_episodes": 1,
+      "cleanup_days": 2
     }
   ],
   "settings": {
