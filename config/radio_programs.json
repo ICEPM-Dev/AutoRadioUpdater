@@ -1,20 +1,28 @@
 {
   "radio_programs": [
     {
-    "name": "El Contacto Cristiano",
-    "url": "https://www.twr360.org/ministry/199/el-contacto-cristiano/lang,2",
-    "enabled": true,
-    "description": "Estudio Biblico",
-    "max_episodes": 1,
-    "cleanup_days": 1
+      "name": "En Contacto",
+      "url": "https://www.encontactoglobal.org/escuche",
+      "description": "Programa diario del Dr. Charles Stanley (~30 min)",
+      "enabled": true,
+      "max_episodes": 1,
+      "cleanup_days": 1
     },
     {
-    "name": "Bible Project Español",
-    "url": "https://proyectobiblia.com/podcasts/bibleproject-espanol/",
-    "enabled": true,
-    "description": "Podcast bíblico educativo",
-    "max_episodes": 5,
-    "cleanup_days": 30
+      "name": "El Contacto Cristiano",
+      "url": "https://www.twr360.org/ministry/199/el-contacto-cristiano/lang,2",
+      "enabled": true,
+      "description": "Estudio Biblico",
+      "max_episodes": 1,
+      "cleanup_days": 1
+    },
+    {
+      "name": "Bible Project Español",
+      "url": "https://proyectobiblia.com/podcasts/bibleproject-espanol/",
+      "enabled": true,
+      "description": "Podcast bíblico educativo",
+      "max_episodes": 5,
+      "cleanup_days": 30
     },
     {
       "name": "BITE Project",

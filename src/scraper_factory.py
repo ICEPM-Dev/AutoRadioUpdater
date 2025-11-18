@@ -15,7 +15,8 @@ from .scrapers import (
     GraciaScraper,
     CarlosRuizScraper,
     RSSFeedScraper,
-    BibleProjectScraper
+    BibleProjectScraper,
+    EnContactoScraper
 )
 
 
@@ -53,6 +54,8 @@ class ScraperFactory:
         'feeds.': RSSFeedScraper,
         'rss': RSSFeedScraper,
         'proyectobiblia.com': BibleProjectScraper,
+        'www.encontactoglobal.org': EnContactoScraper,
+        'encontactoglobal.org': EnContactoScraper,
     }
     
     # Program names mapping
@@ -82,7 +85,8 @@ class ScraperFactory:
         'www.gracia.org': 'Gracia a Vosotros',
         'www.youtube.com': "Carlos Ruiz Devocionales",
         'youtube.com': "Carlos Ruiz Devocionales",
-        'proyectobiblia.com': "Proyecto Biblia"
+        'proyectobiblia.com': "Proyecto Biblia",
+        'encontactoglobal.org': "En Contacto"
     }
     
     @classmethod

@@ -14,6 +14,7 @@ from .youtube_scraper import YouTubeScraper
 from .carlos_ruiz_scraper import CarlosRuizScraper
 from .rss_scraper import RSSFeedScraper
 from .bibleproject_scraper import BibleProjectScraper
+from .encontacto_scraper import EnContactoScraper
 
 __all__ = [
     'BaseScraper',
@@ -31,5 +32,6 @@ __all__ = [
     'YouTubeScraper',
     'CarlosRuizScraper',
     'RSSFeedScraper',
-    'BibleProjectScraper'
+    'BibleProjectScraper',
+    'EnContactoScraper'
 ]
