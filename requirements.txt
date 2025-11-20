@@ -5,6 +5,7 @@ charset-normalizer==3.4.1
 cloudscraper==1.2.71
 feedparser==6.0.12
 idna==3.10
+lxml==6.0.2
 packaging==24.2
 pefile==2023.2.7
 pyinstaller==6.16.0

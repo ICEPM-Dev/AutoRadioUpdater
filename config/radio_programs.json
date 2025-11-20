@@ -1,6 +1,30 @@
 {
   "radio_programs": [
     {
+      "name": "Coalición por el Evangelio - Mujeres",
+      "url": "https://www.coalicionporelevangelio.org/podcasts/mujeres/",
+      "enabled": true,
+      "description": "Podcast para mujeres cristianas",
+      "max_episodes": 5,
+      "cleanup_days": 30
+    },
+    {
+      "name": "Coalición - podcast",
+      "url": "https://www.coalicionporelevangelio.org/podcasts/tgc-articulos-podcast/",
+      "enabled": true,
+      "description": "Podcast informativos",
+      "max_episodes": 1,
+      "cleanup_days": 2
+    },
+    {
+      "name": "Coalición - Sermones",
+      "url": "https://www.coalicionporelevangelio.org/podcasts/un-sermon-para-tu-semana-podcast/",
+      "description": "Sermones semanales de TGC",
+      "enabled": true,
+      "max_episodes": 1,
+      "cleanup_days": 1
+    },
+    {
       "name": "En Contacto",
       "url": "https://www.encontactoglobal.org/escuche",
       "description": "Programa diario del Dr. Charles Stanley (~30 min)",
@@ -31,30 +55,6 @@
       "description": "Podcast via RSS de Anchor",
       "max_episodes": 2,
       "cleanup_days": 2
-    },
-    {
-      "name": "Coalición por el Evangelio - Mujeres",
-      "url": "https://www.coalicionporelevangelio.org/podcasts/mujeres/",
-      "enabled": true,
-      "description": "Podcast para mujeres cristianas",
-      "max_episodes": 5,
-      "cleanup_days": 30
-    },
-    {
-      "name": "Coalición - podcast",
-      "url": "https://www.coalicionporelevangelio.org/podcasts/tgc-articulos-podcast/",
-      "enabled": true,
-      "description": "Podcast informativos",
-      "max_episodes": 1,
-      "cleanup_days": 2
-    },
-    {
-      "name": "Coalición - Sermones",
-      "url": "https://www.coalicionporelevangelio.org/podcasts/un-sermon-para-tu-semana-podcast/",
-      "description": "Sermones semanales de TGC",
-      "enabled": true,
-      "max_episodes": 1,
-      "cleanup_days": 1
     },
     {
       "name": "Carlos Ruiz Devocionales",

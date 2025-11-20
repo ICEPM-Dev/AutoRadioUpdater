@@ -39,7 +39,52 @@ class CoalicionScraper(BaseScraper):
             except Exception as e:
                 print(f"   ⚠️  Error con RSS feed: {e}")
         
-        # Estrategia 2: Buscar enlaces de MP3 directamente en el HTML
+        # Estrategia 2: Si es artículos-podcast, buscar artículos con audio
+        if 'tgc-articulos-podcast' in self.base_url.lower():
+            print(f"   Buscando artículos con audio...")
+            
+            try:
+                soup = self.get_page_content(self.base_url)
+                if not soup:
+                    raise Exception("No se pudo obtener el contenido de la página")
+                
+                episodes = []
+                
+                # Buscar todos los enlaces a artículos
+                article_links = soup.find_all('a', href=re.compile(r'/articulo/[^/]+/$'))
+                
+                seen_urls = set()
+                for link in article_links[:15]:  # Revisar los primeros 15
+                    href = link.get('href')
+                    
+                    if not href or href in seen_urls:
+                        continue
+                    
+                    seen_urls.add(href)
+                    
+                    # Normalizar URL
+                    if not href.startswith('http'):
+                        href = f"https://www.coalicionporelevangelio.org{href}"
+                    
+                    # Obtener título
+                    title = link.get_text(strip=True)
+                    
+                    episodes.append({
+                        "titulo": title if title else href.split('/')[-2].replace('-', ' ').title(),
+                        "escuchar_link": href,
+                        "nombre_programa": self.program_name
+                    })
+                    
+                    if len(episodes) >= 10:  # Limitar a 10
+                        break
+                
+                if episodes:
+                    print(f"   ✓ Encontrados {len(episodes)} artículos")
+                    return episodes
+            except Exception as e:
+                print(f"   ✗ Error buscando artículos: {e}")
+        
+        # Estrategia 3: Buscar enlaces de MP3 directamente en el HTML
         print(f"   Intentando buscar MP3s directamente en la página...")
         
         try:
@@ -82,7 +127,7 @@ class CoalicionScraper(BaseScraper):
         except Exception as e:
             print(f"   ✗ Error buscando MP3s: {e}")
         
-        # Estrategia 3: Buscar enlaces a episodios individuales
+        # Estrategia 4: Buscar enlaces a episodios individuales
         soup = self.get_page_content(self.base_url)
         if not soup:
             return []
@@ -150,38 +195,54 @@ class CoalicionScraper(BaseScraper):
             return "https://www.coalicionporelevangelio.org/media/Mujeres_Podcast"
         elif 'un-sermon-para-tu-semana' in self.base_url.lower():
             return "https://www.coalicionporelevangelio.org/podcasts/un-sermon-para-tu-semana-podcast/feed/?feed=podcast"
+        elif 'tgc-articulos-podcast' in self.base_url.lower():
+            return "https://www.coalicionporelevangelio.org/articulo/feed/?article-podcast-feeds=tgc-articulos-podcasts&feed=podcast&feed=podcast"
         elif 'textos-fuera-de-contexto' in self.base_url.lower():
             return "https://feeds.simplecast.com/DEFv_nWf"
         elif 'para-ser-sinceras' in self.base_url.lower():
             return "https://feeds.simplecast.com/MXdXjs_d"
         elif 'piensa' in self.base_url.lower():
             return "https://www.coalicionporelevangelio.org/podcasts/piensa/feed/?feed=podcast"
-        # Agregar más feeds según necesites
         return None
     
     def _parse_rss(self, rss_content: str) -> List[Dict]:
         """Parse RSS feed to get episodes"""
         from xml.etree import ElementTree as ET
         
+        is_articulos_podcast = 'tgc-articulos-podcast' in self.base_url.lower()
+        
         try:
             root = ET.fromstring(rss_content)
             episodes = []
             
             # Find all items in the feed
-            for item in root.findall('.//item')[:30]:  # Limitar a 30 más recientes
+            for item in root.findall('.//item')[:30]:
                 title_elem = item.find('title')
                 enclosure = item.find('enclosure')
+                link_elem = item.find('link')
                 
-                if title_elem is not None and enclosure is not None:
+                if title_elem is not None:
                     title = title_elem.text
-                    audio_url = enclosure.get('url')
                     
-                    if audio_url and '.mp3' in audio_url.lower():
+                    if not title:
+                        continue
+                    
+                    # Si es el RSS de rss.app, buscar el enlace del artículo
+                    if is_articulos_podcast:
+                        # ARTÍCULOS PODCAST — este RSS trae enclosure con MP3
+                        if enclosure is None:
+                            continue
+
+                        audio_url = enclosure.get("url")
+                        if not audio_url or ".mp3" not in audio_url:
+                            continue
+
                         episodes.append({
-                            "titulo": title,
-                            "audio_url": audio_url,
+                            "titulo": title.strip(),
+                            "audio_url": audio_url.strip(),
                             "nombre_programa": self.program_name
                         })
+                        continue
             
             return episodes
         except Exception as e:
@@ -206,20 +267,24 @@ class CoalicionScraper(BaseScraper):
             
             # Buscar el MP3 con múltiples patrones
             patterns = [
-                # Pattern 1: plyr_download con href
-                r'class="[^"]*plyr_download[^"]*"[^>]+href="([^"]+\.mp3[^"]*)"',
-                # Pattern 2: href con plyr_download
-                r'href="([^"]+\.mp3[^"]*)"[^>]+class="[^"]*plyr_download[^"]*"',
-                # Pattern 3: Blubrry directo
-                r'https://media\.blubrry\.com/[^"\'<>\s]+\.mp3',
-                # Pattern 4: TGC media directo
+                # Pattern 1: TGC media directo (para artículos) - PRIORIDAD
                 r'https://media\.thegospelcoalition\.org/wp-content/uploads/sites/\d+/\d+/\d+/\d+/[^"\'<>\s]+\.mp3',
+                # Pattern 2: plyr_download con href
+                r'class="[^"]*plyr_download[^"]*"[^>]+href="([^"]+\.mp3[^"]*)"',
+                # Pattern 3: href con plyr_download
+                r'href="([^"]+\.mp3[^"]*)"[^>]+class="[^"]*plyr_download[^"]*"',
+                # Pattern 4: Blubrry directo
+                r'https://media\.blubrry\.com/[^"\'<>\s]+\.mp3',
                 # Pattern 5: Cualquier MP3 de TGC o Blubrry
                 r'https://[^"\'<>\s]*(?:blubrry|thegospelcoalition)\.(?:com|org)[^"\'<>\s]+\.mp3',
                 # Pattern 6: Download attribute
                 r'<a[^>]+download[^>]*href="([^"]+\.mp3[^"]*)"',
                 # Pattern 7: data-plyr download
                 r'data-plyr="download"[^>]*href="([^"]+\.mp3[^"]*)"',
+                # Pattern 8: source src con MP3
+                r'<source[^>]+src="([^"]+\.mp3[^"]*)"',
+                # Pattern 9: audio src
+                r'<audio[^>]+src="([^"]+\.mp3[^"]*)"',
             ]
             
             for i, pattern in enumerate(patterns, 1):
