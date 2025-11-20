@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 
 
-def borrar_archivos_viejos(file_dir, dias_antiguedad=30):
+def borrar_archivos_viejos(file_dir, dias_antiguedad):
     """
     Borra archivos más antiguos que dias_antiguedad
     

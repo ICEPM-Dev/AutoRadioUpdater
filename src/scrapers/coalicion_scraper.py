@@ -192,9 +192,9 @@ class CoalicionScraper(BaseScraper):
     def _get_rss_url(self) -> str:
         """Determina la URL del RSS feed según el podcast"""
         if 'mujeres' in self.base_url.lower():
-            return "https://www.coalicionporelevangelio.org/media/Mujeres_Podcast"
+            return "https://www.coalicionporelevangelio.org/podcasts/mujeres/feed/?feed=podcast"
         elif 'un-sermon-para-tu-semana' in self.base_url.lower():
-            return "https://www.coalicionporelevangelio.org/podcasts/un-sermon-para-tu-semana-podcast/feed/?feed=podcast"
+            return "https://www.coalicionporelevangelio.org/podcasts/un-sermon-para-tu-semana-podcast/feed?feed=podcast"
         elif 'tgc-articulos-podcast' in self.base_url.lower():
             return "https://www.coalicionporelevangelio.org/articulo/feed/?article-podcast-feeds=tgc-articulos-podcasts&feed=podcast&feed=podcast"
         elif 'textos-fuera-de-contexto' in self.base_url.lower():
@@ -205,46 +205,66 @@ class CoalicionScraper(BaseScraper):
             return "https://www.coalicionporelevangelio.org/podcasts/piensa/feed/?feed=podcast"
         return None
     
+    
     def _parse_rss(self, rss_content: str) -> List[Dict]:
-        """Parse RSS feed to get episodes"""
         from xml.etree import ElementTree as ET
-        
+
         is_articulos_podcast = 'tgc-articulos-podcast' in self.base_url.lower()
-        
+        is_mujeres_podcast = 'mujeres' in self.base_url.lower()
+
         try:
             root = ET.fromstring(rss_content)
             episodes = []
-            
-            # Find all items in the feed
-            for item in root.findall('.//item')[:30]:
+
+            for item in root.findall('.//item')[:50]:
                 title_elem = item.find('title')
-                enclosure = item.find('enclosure')
                 link_elem = item.find('link')
-                
-                if title_elem is not None:
-                    title = title_elem.text
-                    
-                    if not title:
+                enclosure = item.find('enclosure')
+
+                if title_elem is None:
+                    continue
+                title = title_elem.text.strip()
+
+                # PARA ARTÍCULOS PODCAST
+                if is_articulos_podcast:
+                    if enclosure is None:
                         continue
-                    
-                    # Si es el RSS de rss.app, buscar el enlace del artículo
-                    if is_articulos_podcast:
-                        # ARTÍCULOS PODCAST — este RSS trae enclosure con MP3
-                        if enclosure is None:
-                            continue
+                    audio_url = enclosure.get('url')
+                    if not audio_url or '.mp3' not in audio_url.lower():
+                        continue
+                    episodes.append({
+                        "titulo": title,
+                        "audio_url": audio_url,
+                        "nombre_programa": self.program_name
+                    })
+                    continue
 
-                        audio_url = enclosure.get("url")
-                        if not audio_url or ".mp3" not in audio_url:
-                            continue
+                # PARA MUJERES PODCAST
+                if is_mujeres_podcast:
+                    if enclosure is None:
+                        continue
+                    audio_url = enclosure.get('url')
+                    if not audio_url or '.mp3' not in audio_url.lower():
+                        continue
+                    episodes.append({
+                        "titulo": title,
+                        "audio_url": audio_url,
+                        "nombre_programa": self.program_name
+                    })
+                    continue
 
+                # Para otros podcasts normales
+                if enclosure is not None:
+                    audio_url = enclosure.get('url')
+                    if audio_url and '.mp3' in audio_url.lower():
                         episodes.append({
-                            "titulo": title.strip(),
-                            "audio_url": audio_url.strip(),
+                            "titulo": title,
+                            "audio_url": audio_url,
                             "nombre_programa": self.program_name
                         })
-                        continue
-            
+
             return episodes
+
         except Exception as e:
             print(f"   ✗ Error parseando RSS: {e}")
             return []
