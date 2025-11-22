@@ -18,17 +18,25 @@ def borrar_archivos_viejos(file_dir, dias_antiguedad):
         return 0
     
     archivos_eliminados = 0
+    ahora = datetime.now()
     
     for root, _, files in os.walk(file_dir):
         for name in files:
             path = os.path.join(root, name)
             try:
-                fecha_archivo = (datetime.now() - datetime.fromtimestamp(os.stat(path).st_ctime)).days
+                # Usar mtime (última modificación) en lugar de ctime (creación)
+                # mtime es más confiable en todos los sistemas operativos
+                file_mtime = datetime.fromtimestamp(os.stat(path).st_mtime)
+                dias_desde_modificacion = (ahora - file_mtime).days
                 
-                if fecha_archivo > dias_antiguedad:
-                    print(f"Eliminando: {path} ({fecha_archivo} días)")
+                if dias_desde_modificacion > dias_antiguedad:
+                    print(f"Eliminando: {path} ({dias_desde_modificacion} días)")
                     os.remove(path)
                     archivos_eliminados += 1
+                else:
+                    # Debug: mostrar archivos que NO se eliminan
+                    print(f"  Manteniendo: {name} ({dias_desde_modificacion} días)")
+                    
             except Exception as e:
                 print(f"Error con {path}: {e}")
     
