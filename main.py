@@ -49,7 +49,7 @@ def main():
         if config_manager.should_cleanup_old_files():
             cleanup_days = config_manager.get_cleanup_days()
             print(f"\n{'='*60}")
-            print(f"🧹 Limpiando archivos antiguos (>{cleanup_days} días)")
+            print(f"🧹 Limpiando archivos antiguos (≥{cleanup_days} días)")
             print(f"{'='*60}")
             removed = borrar_archivos_viejos(directorio, cleanup_days)
             if removed and removed > 0:
@@ -90,7 +90,7 @@ def main():
                     program_dir = Path(directorio) / nombre_carpeta
                     
                     if program_dir.exists():
-                        print(f"\n🧹 Limpiando archivos de '{name}' (>{cleanup_days} días)...")
+                        print(f"\n🧹 Limpiando archivos de '{name}' (≥{cleanup_days} días)...")
                         removed = borrar_archivos_viejos(str(program_dir), cleanup_days)
                         if removed and removed > 0:
                             print(f"  ✅ Archivos eliminados: {removed}")

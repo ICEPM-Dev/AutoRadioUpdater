@@ -29,7 +29,7 @@ def borrar_archivos_viejos(file_dir, dias_antiguedad):
                 file_mtime = datetime.fromtimestamp(os.stat(path).st_mtime)
                 dias_desde_modificacion = (ahora - file_mtime).days
                 
-                if dias_desde_modificacion > dias_antiguedad:
+                if dias_desde_modificacion >= dias_antiguedad:
                     print(f"Eliminando: {path} ({dias_desde_modificacion} días)")
                     os.remove(path)
                     archivos_eliminados += 1
