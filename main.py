@@ -47,7 +47,7 @@ def main():
         
         # Clean up old files if enabled (usar default global)
         if config_manager.should_cleanup_old_files():
-            cleanup_days = program.get("cleanup_days", settings.get("cleanup_days", 30))
+            cleanup_days = config_manager.get_cleanup_days()
             print(f"\n{'='*60}")
             print(f"🧹 Limpiando archivos antiguos (>{cleanup_days} días)")
             print(f"{'='*60}")
