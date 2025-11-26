@@ -1,12 +1,20 @@
 {
   "radio_programs": [
     {
+      "name": "El Camino de la Vida",
+      "url": "https://www.elcaminodelavida.org/reflexion-para-hoy/",
+      "enabled": true,
+      "description": "Reflexiones diarias cristianas",
+      "max_episodes": 1,
+      "cleanup_days": 2
+    },
+    {
       "name": "A Través de la Biblia",
       "url": "https://www.twr360.org/ministry/4/a-trav-s-de-la-biblia/lang,2",
       "enabled": true,
       "description": "Estudio sistemático de la Biblia",
       "max_episodes": 1,
-      "cleanup_days": 2
+      "cleanup_days": 1
     },
     {
       "name": "Coalición por el Evangelio - Mujeres",
@@ -70,7 +78,7 @@
       "enabled": true,
       "description": "Devocionales cortos de Carlos Ruiz (≤3 minutos)",
       "max_episodes": 1,
-      "cleanup_days": 2
+      "cleanup_days": 1
     },
     {
       "name": "Semillas al Aire",
@@ -135,14 +143,6 @@
       "description": "Archivo de programas de Renovando tu Mente",
       "max_episodes": 5,
       "cleanup_days": 10
-    },
-    {
-      "name": "El Camino de la Vida",
-      "url": "https://www.elcaminodelavida.org/reflexion-para-hoy/",
-      "enabled": true,
-      "description": "Reflexiones diarias cristianas",
-      "max_episodes": 1,
-      "cleanup_days": 2
     },
     {
       "name": "Alimento para el Alma",
