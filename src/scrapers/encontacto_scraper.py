@@ -1,80 +1,68 @@
-import re
 import requests
-from typing import List, Dict
-from datetime import datetime, timedelta
+from bs4 import BeautifulSoup
 from .base_scraper import BaseScraper
 
-
 class EnContactoScraper(BaseScraper):
-    """Scraper para En Contacto Global - detecta automáticamente el episodio más reciente"""
+    """
+    Scraper para En Contacto Global (Dr. Charles Stanley)
+    Usa el RSS feed de Omny para obtener los episodios más recientes
+    """
     
-    def get_episodes(self) -> List[Dict]:
-        """Busca el episodio más reciente probando fechas inteligentemente"""
-        print(f"\n🔍 Detectando episodio más reciente de En Contacto...")
-        
-        today = datetime.now()
-        
-        # Probar los últimos 10 días para encontrar el más reciente disponible
-        for days_back in range(10):
-            date = today - timedelta(days=days_back)
-            date_str = date.strftime("%Y_%m_%d")
-            date_display = date.strftime('%d/%m/%Y')
-            
-            print(f"  🔄 Probando {date_display}...", end=" ")
-            
-            # El código parece ser un contador incremental en hex
-            # Estrategia: probar rangos amplios de códigos para esta fecha
-            episode_found = self._try_find_episode_for_date(date_str, date_display)
-            
-            if episode_found:
-                return [episode_found]
-            else:
-                print("✗")
-        
-        print(f"  ⚠ No se encontraron episodios en los últimos 10 días")
-        return []
+    def __init__(self, base_url, nombre_programa="En Contacto"):
+        super().__init__(base_url, nombre_programa)
+        self.rss_url = "https://www.omnycontent.com/d/playlist/7237c071-cd56-4495-998a-b23d00f69e8d/050e6b58-4fa8-422b-9761-b2670157b66e/ef511191-f6c9-45a8-93f1-b2670157b687/podcast.rss"
     
-    def _try_find_episode_for_date(self, date_str: str, date_display: str) -> Dict:
-        """
-        Intenta encontrar el episodio para una fecha específica probando múltiples códigos.
-        Usa búsqueda binaria inteligente en rangos hex.
-        """
-        # Rango aproximado de códigos hex (basado en patrón observado)
-        # 8E100 = 581888 decimal
-        # Incremento aproximado: ~1 por día
+    def get_episodes(self):
+        """Obtiene episodios desde el RSS feed de Omny"""
+        print(f"\n🔍 Obteniendo episodios desde RSS de Omny...")
         
-        # Calcular código base aproximado
-        reference_date = datetime(2025, 11, 19)
-        reference_hex = 0x8E10E  # 581902 decimal
-        
-        target_date = datetime.strptime(date_str, "%Y_%m_%d")
-        days_diff = (target_date - reference_date).days
-        
-        estimated_code = reference_hex + days_diff
-        
-        # Probar en un rango de ±5 días del estimado
-        for offset in range(-5, 6):
-            code = estimated_code + offset
-            hex_code = f"{code:X}"  # Convertir a hex
+        try:
+            response = requests.get(
+                self.rss_url,
+                timeout=15,
+                headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+            )
             
-            audio_url = f"https://intouch.azureedge.net/spanish/pgm/ec_pgm_{date_str}_{hex_code}.mp3"
+            if response.status_code != 200:
+                print(f"   ✗ Error HTTP {response.status_code}")
+                return []
             
-            try:
-                response = requests.head(audio_url, timeout=3)
-                if response.status_code == 200:
-                    print(f"✓ (#{hex_code})")
-                    return {
-                        "titulo": f"En Contacto - {date_display}",
-                        "audio_url": audio_url,
-                        "fecha": date_display,
-                        "codigo": hex_code,
-                        "nombre_programa": self.program_name
-                    }
-            except:
-                continue
-        
-        return None
+            # Parsear el RSS
+            soup = BeautifulSoup(response.content, 'xml')
+            
+            # Buscar todos los items (episodios)
+            items = soup.find_all('item')
+            
+            if not items:
+                print(f"   ✗ No se encontraron episodios en el RSS")
+                return []
+            
+            print(f"   ✓ Encontrados {len(items)} episodios en el RSS")
+            
+            episodes = []
+            for item in items[:10]:  # Limitar a 10 más recientes
+                # Extraer información del episodio
+                title = item.find('title')
+                enclosure = item.find('enclosure')
+                pub_date = item.find('pubDate')
+                
+                if title and enclosure:
+                    audio_url = enclosure.get('url')
+                    episode_title = title.text.strip()
+                    
+                    episodes.append({
+                        'titulo': episode_title,
+                        'audio_url': audio_url,
+                        'fecha': pub_date.text.strip() if pub_date else '',
+                        'nombre_programa': self.program_name
+                    })
+            
+            return episodes
+            
+        except Exception as e:
+            print(f"   ✗ Error obteniendo RSS: {e}")
+            return []
     
-    def get_audio_url(self, episode_data: Dict) -> str:
-        """Retorna la URL de audio ya encontrada"""
-        return episode_data.get("audio_url")
+    def get_audio_url(self, episode_data):
+        """Retorna la URL de audio directamente desde el RSS"""
+        return episode_data.get('audio_url')
