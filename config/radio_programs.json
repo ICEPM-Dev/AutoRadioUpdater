@@ -1,6 +1,14 @@
 {
   "radio_programs": [
     {
+      "name": "Semillas al Aire",
+      "url": "https://www.semillasalaire.com.ar/",
+      "enabled": true,
+      "description": "Programa de radio cristiano",
+      "max_episodes": 1,
+      "cleanup_days": 2
+    },
+    {
       "name": "El Camino de la Vida",
       "url": "https://www.elcaminodelavida.org/reflexion-para-hoy/",
       "enabled": true,
@@ -79,14 +87,6 @@
       "description": "Devocionales cortos de Carlos Ruiz (≤3 minutos)",
       "max_episodes": 1,
       "cleanup_days": 1
-    },
-    {
-      "name": "Semillas al Aire",
-      "url": "https://www.semillasalaire.com.ar/",
-      "enabled": true,
-      "description": "Programa de radio cristiano",
-      "max_episodes": 1,
-      "cleanup_days": 2
     },
     {
       "name": "Sabiduría Internacional",
