@@ -10,7 +10,7 @@ class EnContactoScraper(BaseScraper):
     
     def __init__(self, base_url, nombre_programa="En Contacto"):
         super().__init__(base_url, nombre_programa)
-        self.rss_url = "https://www.omnycontent.com/d/playlist/7237c071-cd56-4495-998a-b23d00f69e8d/050e6b58-4fa8-422b-9761-b2670157b66e/ef511191-f6c9-45a8-93f1-b2670157b687/podcast.rss"
+        self.rss_url = "https://www.omnycontent.com/d/playlist/7237c071-cd56-4495-998a-b23d00f69e8d/1cb79382-cef3-4954-9d99-b26701579b3b/c69d90a4-30b9-49b8-b6b2-b26701579b6e/podcast.rss"
     
     def get_episodes(self):
         """Obtiene episodios desde el RSS feed de Omny"""

@@ -1,6 +1,14 @@
 {
   "radio_programs": [
     {
+      "name": "Temas Biblicos",
+      "url": "https://shows.acast.com/temas-biblicos/episodes",
+      "enabled": true,
+      "description": "Episodio de podcast Temas Biblicos",
+      "max_episodes": 1,
+      "cleanup_days": 2
+    },
+    {
       "name": "Semillas al Aire",
       "url": "https://www.semillasalaire.com.ar/",
       "enabled": true,
@@ -245,14 +253,6 @@
       "url": "https://cambiosprofundos.com/devocionales-en-audio/",
       "enabled": true,
       "description": "Devocionales cristianos en audio",
-      "max_episodes": 1,
-      "cleanup_days": 2
-    },
-    {
-      "name": "Temas Biblicos",
-      "url": "https://shows.acast.com/temas-biblicos/episodes",
-      "enabled": true,
-      "description": "Episodio de podcast Temas Biblicos",
       "max_episodes": 1,
       "cleanup_days": 2
     }
