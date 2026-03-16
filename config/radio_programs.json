@@ -1,6 +1,22 @@
 {
   "radio_programs": [
     {
+      "name": "Carlos Ruiz Devocionales",
+      "url": "https://www.youtube.com/@CarlosRuiz-eq8pf/videos",
+      "enabled": true,
+      "description": "Devocionales cortos de Carlos Ruiz (≤3 minutos)",
+      "max_episodes": 1,
+      "cleanup_days": 1
+    },
+    {
+      "name": "Cambios Profundos - Devocionales",
+      "url": "https://cambiosprofundos.com/devocionales-en-audio/",
+      "enabled": true,
+      "description": "Devocionales cristianos en audio",
+      "max_episodes": 1,
+      "cleanup_days": 2
+    },
+    {
       "name": "Temas Biblicos",
       "url": "https://shows.acast.com/temas-biblicos/episodes",
       "enabled": true,
@@ -87,14 +103,6 @@
       "description": "Podcast via RSS de Anchor",
       "max_episodes": 2,
       "cleanup_days": 2
-    },
-    {
-      "name": "Carlos Ruiz Devocionales",
-      "url": "https://www.youtube.com/@CarlosRuiz-eq8pf/videos",
-      "enabled": true,
-      "description": "Devocionales cortos de Carlos Ruiz (≤3 minutos)",
-      "max_episodes": 1,
-      "cleanup_days": 1
     },
     {
       "name": "Sabiduría Internacional",
@@ -247,14 +255,6 @@
       "description": "Recursos para la crianza cristiana",
       "max_episodes": 5,
       "cleanup_days": 10
-    },
-    {
-      "name": "Cambios Profundos - Devocionales",
-      "url": "https://cambiosprofundos.com/devocionales-en-audio/",
-      "enabled": true,
-      "description": "Devocionales cristianos en audio",
-      "max_episodes": 1,
-      "cleanup_days": 2
     }
   ],
   "settings": {

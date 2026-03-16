@@ -106,6 +106,15 @@ def _descargar_youtube(video_url, ruta_archivo, titulo):
                 'preferredcodec': 'mp3',
                 'preferredquality': '192',
             }],
+            'extractor_args': {
+                'youtube': {
+                    'player_client': 'default,android',
+                    'formats': 'missing_pot'
+                }
+            },
+            'http_headers': {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            },
             'quiet': False,
             'no_warnings': False,
         }
