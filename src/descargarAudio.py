@@ -108,8 +108,7 @@ def _descargar_youtube(video_url, ruta_archivo, titulo):
             }],
             'extractor_args': {
                 'youtube': {
-                    'player_client': 'default,android',
-                    'formats': 'missing_pot'
+                    'player_client': ['default', 'android'],
                 }
             },
             'http_headers': {

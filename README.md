@@ -107,5 +107,5 @@ AutoRadioUpdater/
 
 ## Compilar a ejecutable
 ```sh
-pyinstaller --onefile main.py
+pyinstaller --onefile --console --add-data=config/radio_programs.json:config .\main.py
 ```
