@@ -1,10 +1,22 @@
 import os
+import sys
 from pathlib import Path
 from dotenv import load_dotenv
 from src.borrarArchivosViejos import borrar_archivos_viejos
 from src.programa_manager import ProgramaManager
 from src.config_manager import ConfigManager
 from src.limpiarNombreArchivo import limpiar_nombre_archivo
+
+
+def get_resource_path(relative_path):
+    """Obtiene la ruta correcta de recursos tanto en desarrollo como en ejecutable"""
+    try:
+        # PyInstaller crea una carpeta temporal y almacena la ruta en _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    
+    return os.path.join(base_path, relative_path)
 
 
 def main():

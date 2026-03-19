@@ -1,7 +1,20 @@
 import time
+import os
+import sys
 from pathlib import Path
 import requests
 from src.limpiarNombreArchivo import limpiar_nombre_archivo
+
+
+def get_resource_path(relative_path):
+    """Obtiene la ruta correcta de recursos tanto en desarrollo como en ejecutable"""
+    try:
+        # PyInstaller crea una carpeta temporal y almacena la ruta en _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    
+    return os.path.join(base_path, relative_path)
 
 
 def descargar_audio(audio_url, nombre_programa, titulo, directorio_base=None):
@@ -97,10 +110,27 @@ def _descargar_youtube(video_url, ruta_archivo, titulo):
         
         print(f"📺 Descargando audio de YouTube: {video_url}")
         
+        # Buscar cookies.txt en múltiples ubicaciones
+        cookies_paths = [
+            'cookies.txt',  # Directorio actual
+            get_resource_path('cookies.txt'),  # Incluido en PyInstaller
+            os.path.join(os.path.dirname(sys.executable), 'cookies.txt'),  # Junto al .exe
+        ]
+        
+        cookiefile = None
+        for path in cookies_paths:
+            if os.path.exists(path):
+                cookiefile = path
+                print(f"   ✓ Usando cookies: {path}")
+                break
+        
+        if not cookiefile:
+            print(f"   ⚠️  cookies.txt no encontrado, intentando sin cookies...")
+        
         # Configuración para yt-dlp
         ydl_opts = {
-            'format': 'bestaudio/best',
-            'outtmpl': str(ruta_archivo.with_suffix('')),  # Sin extensión, yt-dlp la agrega
+            'format': '140/bestaudio/best',
+            'outtmpl': str(ruta_archivo.with_suffix('')),
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',
@@ -108,15 +138,23 @@ def _descargar_youtube(video_url, ruta_archivo, titulo):
             }],
             'extractor_args': {
                 'youtube': {
-                    'player_client': ['default', 'android'],
+                    'player_client': ['android', 'web'],
+                    'skip': ['hls', 'dash', 'translated_subs'],
                 }
             },
             'http_headers': {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                'User-Agent': 'com.google.android.youtube/19.09.37 (Linux; U; Android 11) gzip',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Language': 'en-us,en;q=0.5',
+                'Sec-Fetch-Mode': 'navigate',
             },
             'quiet': False,
             'no_warnings': False,
         }
+        
+        # Solo agregar cookies si el archivo existe
+        if cookiefile:
+            ydl_opts['cookiefile'] = cookiefile
         
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([video_url])
@@ -132,25 +170,10 @@ def _descargar_youtube(video_url, ruta_archivo, titulo):
         
     except Exception as e:
         print(f"✗ Error descargando de YouTube: {e}")
-        print(f"   Para descargar manualmente: yt-dlp -x --audio-format mp3 {video_url}")
-
-
-def _descargar_spotify(spotify_url, ruta_archivo, titulo):
-    """
-    Spotify usa DRM y no se puede descargar directamente.
-    Esta función solo informa al usuario.
-    """
-    print(f"🎵 Spotify detectado: {spotify_url}")
-    print(f"⚠ ERROR: Spotify usa DRM (protección anti-copia)")
-    print(f"   yt-dlp NO puede descargar contenido protegido con DRM")
-    print(f"\n💡 Alternativas:")
-    print(f"   1. Usa Spotify Premium y escucha offline en la app")
-    print(f"   2. Busca si el podcast tiene RSS feed público")
-    print(f"   3. Verifica si está disponible en YouTube o SoundCloud")
-    print(f"\n   Este episodio será OMITIDO")
-    
-    # No intentar descargar, simplemente retornar
-    return
+        print(f"\n💡 Soluciones:")
+        print(f"   1. Asegúrate de tener cookies.txt actualizado")
+        print(f"   2. Actualiza yt-dlp: pip install -U yt-dlp")
+        print(f"   3. Descarga manual: yt-dlp --cookies cookies.txt -f 140 '{video_url}'")
 
 
 def _generate_local_audio_file(ruta_archivo, titulo):
