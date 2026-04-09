@@ -1,6 +1,22 @@
 {
   "radio_programs": [
     {
+      "name": "Sabiduría Internacional",
+      "url": "https://sabiduriainternacional.org/",
+      "enabled": true,
+      "description": "Enseñanzas bíblicas internacionales",
+      "max_episodes": 1,
+      "cleanup_days": 2
+    },
+    {
+      "name": "Renovando tu Mente - Ligonier",
+      "url": "https://es.ligonier.org/renovandotumente/archivo/",
+      "enabled": true,
+      "description": "Archivo de programas de Renovando tu Mente",
+      "max_episodes": 5,
+      "cleanup_days": 10
+    },
+    {
       "name": "Carlos Ruiz Devocionales",
       "url": "https://www.youtube.com/@CarlosRuiz-eq8pf/videos",
       "enabled": true,
@@ -105,14 +121,6 @@
       "cleanup_days": 2
     },
     {
-      "name": "Sabiduría Internacional",
-      "url": "https://sabiduriainternacional.org/",
-      "enabled": true,
-      "description": "Enseñanzas bíblicas internacionales",
-      "max_episodes": 1,
-      "cleanup_days": 2
-    },
-    {
       "name": "Visión para Vivir",
       "url": "https://visionparavivir.org/escuche/programa-actual/",
       "enabled": true,
@@ -151,14 +159,6 @@
       "description": "Enseñanzas cristianas",
       "max_episodes": 1,
       "cleanup_days": 1
-    },
-    {
-      "name": "Renovando tu Mente - Ligonier",
-      "url": "https://es.ligonier.org/renovandotumente/archivo/",
-      "enabled": true,
-      "description": "Archivo de programas de Renovando tu Mente",
-      "max_episodes": 5,
-      "cleanup_days": 10
     },
     {
       "name": "Alimento para el Alma",
