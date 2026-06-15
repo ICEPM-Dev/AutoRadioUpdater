@@ -15,7 +15,7 @@ class BaseScraper(ABC):
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
             'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8,en-US;q=0.7',
-            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Encoding': 'gzip, deflate',
             'Connection': 'keep-alive',
             'Upgrade-Insecure-Requests': '1',
             'Sec-Fetch-Dest': 'document',
@@ -29,7 +29,17 @@ class BaseScraper(ABC):
         try:
             response = self.session.get(url, timeout=30)
             response.raise_for_status()
-            return BeautifulSoup(response.text, "html.parser")
+            
+            content = response.content
+            # Try to detect if content is compressed (gzip magic bytes)
+            if content[:2] == b'\x1f\x8b':
+                import gzip
+                try:
+                    content = gzip.decompress(content)
+                except Exception:
+                    pass
+            
+            return BeautifulSoup(content, "html.parser", from_encoding=response.encoding or 'utf-8')
         except requests.RequestException as e:
             print(f"Error al acceder a la página {url}: {e}")
             return None
