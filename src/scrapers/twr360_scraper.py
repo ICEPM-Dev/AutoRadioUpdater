@@ -29,6 +29,9 @@ class TWR360Scraper(BaseScraper):
                         "nombre_programa": self.program_name
                     })
         
+        if not episodes:
+            print(f"   ⚠ No se encontraron episodios. Primeros 500 chars del HTML:")
+            print(f"   {soup.prettify()[:500]}")
         return episodes
     
     def get_audio_url(self, episode_data: Dict) -> str:
