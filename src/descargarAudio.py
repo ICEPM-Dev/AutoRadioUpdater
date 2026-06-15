@@ -6,25 +6,27 @@ import requests
 from src.limpiarNombreArchivo import limpiar_nombre_archivo
 
 
+MAX_RETRIES = 5
+BASE_TIMEOUT = 60
+LARGE_FILE_TIMEOUT = 300
+RETRY_BASE_DELAY = 5
+
+
 def get_resource_path(relative_path):
     """Obtiene la ruta correcta de recursos tanto en desarrollo como en ejecutable"""
     try:
-        # PyInstaller crea una carpeta temporal y almacena la ruta en _MEIPASS
         base_path = sys._MEIPASS
     except Exception:
         base_path = os.path.abspath(".")
-    
     return os.path.join(base_path, relative_path)
 
 
 def descargar_audio(audio_url, nombre_programa, titulo, directorio_base=None):
-    # Use the base directory if provided, otherwise use "programas"
     if directorio_base:
         carpeta_base = Path(directorio_base)
     else:
         carpeta_base = Path("programas")
-    
-    # Create subfolder for the program
+
     carpeta_programa = carpeta_base / limpiar_nombre_archivo(nombre_programa)
     carpeta_programa.mkdir(parents=True, exist_ok=True)
 
@@ -34,24 +36,21 @@ def descargar_audio(audio_url, nombre_programa, titulo, directorio_base=None):
         print(f"El archivo ya existe: {ruta_archivo}. Se omite la descarga.")
         return
 
-    # Handle YouTube URLs
     if 'youtube.com' in audio_url or 'youtu.be' in audio_url:
         return _descargar_youtube(audio_url, ruta_archivo, titulo)
 
-    # Handle special case for local audio generation
     if audio_url == "generate_local_audio":
         print(f"Generando audio local para: {titulo}")
         _generate_local_audio_file(ruta_archivo, titulo)
         return
 
-    # Normal download for direct MP3 URLs
-    for intento in range(3):
+    is_large_file = 'podbean.com' in audio_url or 'sabiduria' in nombre_programa.lower()
+    timeout = LARGE_FILE_TIMEOUT if is_large_file else BASE_TIMEOUT
+
+    for intento in range(MAX_RETRIES):
         try:
             print(f"Descargando audio desde: {audio_url}")
-            
-            # Check if this is a potentially large file
-            is_large_file = 'podbean.com' in audio_url or 'sabiduria' in nombre_programa.lower()
-            
+
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                 'Accept': 'audio/webm,audio/ogg,audio/wav,audio/*;q=0.9,*/*;q=0.5',
@@ -59,48 +58,62 @@ def descargar_audio(audio_url, nombre_programa, titulo, directorio_base=None):
                 'Connection': 'keep-alive',
                 'Accept-Encoding': 'identity',
             }
-            
-            timeout = 300 if is_large_file else 60
-            
+
             response = requests.get(audio_url, stream=True, timeout=timeout, headers=headers, allow_redirects=True)
 
             if response.status_code == 200:
                 total_size = int(response.headers.get('content-length', 0))
                 downloaded = 0
-                
+
                 with ruta_archivo.open("wb") as f:
                     chunk_size = 131072 if is_large_file else 65536
-                    
+
                     for chunk in response.iter_content(chunk_size=chunk_size):
                         if chunk:
                             f.write(chunk)
                             downloaded += len(chunk)
-                            
+
                             if total_size > 0 and is_large_file:
                                 progress = (downloaded / total_size) * 100
                                 if downloaded % (5 * 1024 * 1024) < chunk_size:
-                                    print(f"  Progreso: {progress:.1f}% ({downloaded // 1024 // 1024} MB / {total_size // 1024 // 1024} MB)")
+                                    print(f"Progreso: {progress:.1f}% ({downloaded // 1024 // 1024} MB / {total_size // 1024 // 1024} MB)")
                             elif total_size > 0 and not is_large_file:
                                 progress = (downloaded / total_size) * 100
                                 if downloaded % (2 * 1024 * 1024) < chunk_size:
-                                    print(f"  Progreso: {progress:.1f}% ({downloaded // 1024 // 1024} MB / {total_size // 1024 // 1024} MB)")
+                                    print(f"Progreso: {progress:.1f}% ({downloaded // 1024 // 1024} MB / {total_size // 1024 // 1024} MB)")
 
                 if is_large_file:
-                    print(f"✅ Audio grande guardado en: {ruta_archivo}")
-                    print(f"   Tamaño: {downloaded // 1024 // 1024} MB")
+                    print(f"Audio grande guardado en: {ruta_archivo}")
+                    print(f"Tamaño: {downloaded // 1024 // 1024} MB")
                 else:
-                    print(f"✅ Audio guardado en: {ruta_archivo}")
+                    print(f"Audio guardado en: {ruta_archivo}")
                 return
 
             print(f"Error al descargar el audio: {response.status_code}")
 
-        except requests.exceptions.RequestException as e:
-            print(f"Error de conexión (intento {intento + 1}/3): {e}")
-            if intento < 2:
-                print("Reintentando...")
-                time.sleep(5)
+        except requests.exceptions.Timeout as e:
+            espera = RETRY_BASE_DELAY * (2 ** intento)
+            print(f"Timeout agotado (intento {intento + 1}/{MAX_RETRIES}): {e}")
+            if intento < MAX_RETRIES - 1:
+                print(f"Reintentando en {espera}s...")
+                time.sleep(espera)
 
-    print("Se alcanzó el número máximo de intentos. No se pudo descargar el audio.")
+        except requests.exceptions.ConnectionError as e:
+            espera = RETRY_BASE_DELAY * (2 ** intento)
+            print(f"Error de conexión (intento {intento + 1}/{MAX_RETRIES}): {e}")
+            if intento < MAX_RETRIES - 1:
+                print(f"Reintentando en {espera}s...")
+                time.sleep(espera)
+
+        except requests.exceptions.RequestException as e:
+            espera = RETRY_BASE_DELAY * (2 ** intento)
+            print(f"Error de conexión (intento {intento + 1}/{MAX_RETRIES}): {e}")
+            if intento < MAX_RETRIES - 1:
+                print(f"Reintentando en {espera}s...")
+                time.sleep(espera)
+
+    print(f"Se alcanzó el número máximo de intentos ({MAX_RETRIES}). No se pudo descargar: {titulo}")
+    return None
 
 
 def _descargar_youtube(video_url, ruta_archivo, titulo):
