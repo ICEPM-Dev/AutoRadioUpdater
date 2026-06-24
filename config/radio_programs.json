@@ -6,7 +6,7 @@
       "enabled": true,
       "description": "Enseñanzas bíblicas internacionales",
       "max_episodes": 1,
-      "cleanup_days": 3
+      "cleanup_days": 2
     },
     {
       "name": "Renovando tu Mente - Ligonier",
@@ -14,7 +14,7 @@
       "enabled": true,
       "description": "Archivo de programas de Renovando tu Mente",
       "max_episodes": 5,
-      "cleanup_days": 21
+      "cleanup_days": 20
     },
     {
       "name": "Carlos Ruiz Devocionales",
@@ -22,7 +22,7 @@
       "enabled": true,
       "description": "Devocionales cortos de Carlos Ruiz (≤3 minutos)",
       "max_episodes": 1,
-      "cleanup_days": 2
+      "cleanup_days": 1
     },
     {
       "name": "Cambios Profundos - Devocionales",
@@ -30,7 +30,7 @@
       "enabled": true,
       "description": "Devocionales cristianos en audio",
       "max_episodes": 1,
-      "cleanup_days": 3
+      "cleanup_days": 2
     },
     {
       "name": "Temas Biblicos",
@@ -38,7 +38,7 @@
       "enabled": true,
       "description": "Episodio de podcast Temas Biblicos",
       "max_episodes": 1,
-      "cleanup_days": 3
+      "cleanup_days": 2
     },
     {
       "name": "Semillas al Aire",
@@ -46,7 +46,7 @@
       "enabled": true,
       "description": "Programa de radio cristiano",
       "max_episodes": 1,
-      "cleanup_days": 3
+      "cleanup_days": 2
     },
     {
       "name": "El Camino de la Vida",
@@ -54,7 +54,7 @@
       "enabled": true,
       "description": "Reflexiones diarias cristianas",
       "max_episodes": 1,
-      "cleanup_days": 3
+      "cleanup_days": 2
     },
     {
       "name": "A Través de la Biblia",
@@ -62,7 +62,7 @@
       "enabled": true,
       "description": "Estudio sistemático de la Biblia",
       "max_episodes": 1,
-      "cleanup_days": 2
+      "cleanup_days": 1
     },
     {
       "name": "Coalición por el Evangelio - Mujeres",
@@ -70,7 +70,7 @@
       "enabled": true,
       "description": "Podcast para mujeres cristianas",
       "max_episodes": 5,
-      "cleanup_days": 21
+      "cleanup_days": 20
     },
     {
       "name": "Coalición - podcast",
@@ -78,7 +78,7 @@
       "enabled": true,
       "description": "Podcast informativos",
       "max_episodes": 1,
-      "cleanup_days": 3
+      "cleanup_days": 2
     },
     {
       "name": "En Contacto",
@@ -86,7 +86,7 @@
       "description": "Programa diario del Dr. Charles Stanley (~30 min)",
       "enabled": true,
       "max_episodes": 1,
-      "cleanup_days": 2
+      "cleanup_days": 1
     },
     {
       "name": "El Contacto Cristiano",
@@ -94,7 +94,7 @@
       "enabled": true,
       "description": "Estudio Biblico",
       "max_episodes": 1,
-      "cleanup_days": 2
+      "cleanup_days": 1
     },
     {
       "name": "Bible Project Español",
@@ -102,7 +102,7 @@
       "enabled": true,
       "description": "Podcast bíblico educativo",
 "max_episodes": 5,
-      "cleanup_days": 31
+      "cleanup_days": 30
     },
     {
       "name": "BITE Project",
@@ -110,7 +110,7 @@
       "enabled": true,
       "description": "Podcast via RSS de Anchor",
       "max_episodes": 2,
-      "cleanup_days": 3
+      "cleanup_days": 2
     },
     {
       "name": "Visión para Vivir",
@@ -118,7 +118,7 @@
       "enabled": true,
       "description": "Programa actual de Visión para Vivir",
       "max_episodes": 1,
-      "cleanup_days": 3
+      "cleanup_days": 2
     },
     {
       "name": "Abre la Biblia",
@@ -126,7 +126,7 @@
       "enabled": true,
       "description": "Programa bíblico con el Pastor Colin Smith",
       "max_episodes": 1,
-      "cleanup_days": 3
+      "cleanup_days": 2
     },
     {
       "name": "Fundamentos del Discipulado",
@@ -134,7 +134,7 @@
       "enabled": true,
       "description": "Enseñanzas sobre discipulado cristiano",
       "max_episodes": 5,
-      "cleanup_days": 21
+      "cleanup_days": 20
     },
     {
       "name": "Esperanza Segura",
@@ -142,7 +142,7 @@
       "enabled": true,
       "description": "Estudios biblicos",
       "max_episodes": 1,
-      "cleanup_days": 2
+      "cleanup_days": 1
     },
     {
       "name": "Escuela Biblica Trans Mundial",
@@ -150,7 +150,7 @@
       "enabled": true,
       "description": "Enseñanzas cristianas",
       "max_episodes": 1,
-      "cleanup_days": 2
+      "cleanup_days": 1
     },
     {
       "name": "Alimento para el Alma",
@@ -158,7 +158,7 @@
       "enabled": true,
       "description": "Programa de TWR360",
       "max_episodes": 1,
-      "cleanup_days": 2
+      "cleanup_days": 1
     },
     {
       "name": "Aviva Nuestros Corazones",
@@ -166,7 +166,7 @@
       "enabled": true,
       "description": "Programa para mujeres cristianas",
       "max_episodes": 1,
-      "cleanup_days": 3
+      "cleanup_days": 2
     },
     {
       "name": "Correr para Ganar",
@@ -174,7 +174,7 @@
       "enabled": true,
       "description": "Enseñanzas sobre la vida cristiana",
       "max_episodes": 1,
-      "cleanup_days": 3
+      "cleanup_days": 2
     },
     {
       "name": "El Amor que Vale",
@@ -182,7 +182,7 @@
       "enabled": true,
       "description": "Programa sobre el amor de Dios",
       "max_episodes": 1,
-      "cleanup_days": 3
+      "cleanup_days": 2
     },
     {
       "name": "Gracia a Vosotros",
@@ -190,7 +190,7 @@
       "enabled": true,
       "description": "Enseñanzas bíblicas expositivas",
       "max_episodes": 1,
-      "cleanup_days": 3
+      "cleanup_days": 2
     },
     {
       "name": "Jungla Semántica",
@@ -198,7 +198,7 @@
       "enabled": true,
       "description": "Programa educativo cristiano",
       "max_episodes": 5,
-      "cleanup_days": 21
+      "cleanup_days": 20
     },
     {
       "name": "La Verdad en el Tubo de Ensayo",
@@ -206,7 +206,7 @@
       "enabled": true,
       "description": "Ciencia y fe cristiana",
       "max_episodes": 5,
-      "cleanup_days": 21
+      "cleanup_days": 20
     },
     {
       "name": "Momento Decisivo",
@@ -214,7 +214,7 @@
       "enabled": true,
       "description": "Decisiones importantes desde la perspectiva bíblica",
       "max_episodes": 1,
-      "cleanup_days": 3
+      "cleanup_days": 2
     },
     {
       "name": "Pedrito el Pulpo",
@@ -222,7 +222,7 @@
       "enabled": true,
       "description": "Programa infantil cristiano",
       "max_episodes": 5,
-      "cleanup_days": 21
+      "cleanup_days": 20
     },
     {
       "name": "Tierra Firme",
@@ -230,7 +230,7 @@
       "enabled": true,
       "description": "Fundamentos sólidos de la fe",
       "max_episodes": 5,
-      "cleanup_days": 21
+      "cleanup_days": 20
     },
     {
       "name": "Crianza Reverente",
@@ -238,13 +238,13 @@
       "enabled": true,
       "description": "Recursos para la crianza cristiana",
       "max_episodes": 5,
-      "cleanup_days": 21
+      "cleanup_days": 20
     }
   ],
   "settings": {
     "download_directory": "programas",
     "max_episodes_per_program": 5,
     "cleanup_old_files": true,
-    "cleanup_days": 31
+    "cleanup_days": 30
   }
 }
